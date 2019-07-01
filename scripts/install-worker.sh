@@ -164,7 +164,7 @@ BINARIES=(
     aws-iam-authenticator
 )
 for binary in ${BINARIES[*]} ; do
-    if [[ -n "$AWS_ACCESS_KEY_ID" ]]; then
+    if aws sts get-caller-identity > /dev/null 2>&1; then
         echo "AWS cli present - using it to copy binaries from s3."
         aws s3 cp --region $BINARY_BUCKET_REGION $S3_PATH/$binary .
         aws s3 cp --region $BINARY_BUCKET_REGION $S3_PATH/$binary.sha256 .
